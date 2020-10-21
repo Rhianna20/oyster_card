@@ -36,22 +36,29 @@ MINIMUM_FARE = 1
     end
 
     describe '#touch_in' do
+        #let(:'double name') {double 'what you are doubling'}
+        let(:touchin_station) {double :station }
         it 'oyster card touch in' do
-        oystercard.touch_in
+        oystercard.top_up(10)
+        oystercard.touch_in(touchin_station)
         expect(oystercard.in_journey).to eq true
-        end
+        
+    end
 
     describe '#touch_out' do
         it 'can touch out' do 
         oystercard.touch_out
         expect(oystercard.in_journey).to eq false 
         end
+        it 'will charge the user by minimum fare' do
+        expect{oystercard.touch_out}.to change{oystercard.balance}.by (-Oystercard::MINIMUM_FARE)
+        end 
+    end
     describe '#minimum fare' do
       it 'will not touch in if below minimum balance' do
       oystercard.balance
       expect{oystercard.minimum_fare}.to raise_error "please top-up, minimum fare £#{ MINIMUM_FARE }"
    end
-end 
 end
 end
 end
