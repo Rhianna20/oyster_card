@@ -69,3 +69,17 @@ end
 end
 end
 end
+
+describe 'Station' do
+subject{ Station.new(testname, testzone)}
+
+let(:testname){double :name}
+let(:testzone){double :zone}
+
+    it 'exposes name variable' do
+     expect(subject.name).to eq testname   
+    end
+    it 'exposes zone variable' do
+        expect(subject.zone).to eq testzone
+    end
+end
